@@ -1,4 +1,4 @@
-CREATE DATABASE GameWiki;
+CREATE DATABASE IF NOT EXISTS GameWiki;
 
 CREATE TABLE IF NOT EXISTS GameWiki.Game (
 	GameName varchar(50) NOT NULL PRIMARY KEY,
@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS GameWiki.Location (
 	LocationID int CHECK(LocationID > 0 AND LocationID < 1000) NOT NULL PRIMARY KEY,
 	LocationName varchar(50) NOT NULL,
 	Theme varchar(500),
-	GameName varchar(50) NOT NULL REFERENCES GameWiki.Game(GameName)
+	GameName varchar(50) NOT NULL,
+    constraint foreign key (GameName) references GameWiki.Game(GameName)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Level (
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS GameWiki.Level (
     LevelName varchar(50) not null,
     Boss varchar(50),
     RewardXP int,
-    LocationID int not null references GameWiki.Location(LocationID)
+    LocationID int not null,
+    constraint foreign key (LocationID) references gamewiki.location(LocationID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.NPC (
@@ -38,8 +40,10 @@ CREATE TABLE IF NOT EXISTS GameWiki.NPC (
     Health int,
     XPLevel int,
     Mana int,
-    ItemID int references GameWiki.Item(ItemID),
-    LevelID int references GameWiki.Item(ItemID)
+    ItemID int,
+    LevelID int,
+    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    constraint foreign key (LevelID) references gamewiki.level(LevelID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Enemy (
@@ -48,14 +52,16 @@ CREATE TABLE IF NOT EXISTS GameWiki.Enemy (
     Difficulty varchar(50) not null,
     Health int check(Health > 0) not null,
     RewardXP int,
-    ItemID int not null references GameWiki.Item(ItemID)
+    ItemID int not null,
+    constraint foreign key (ItemID) references gamewiki.item(ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.LevelEnemy (
 	EnemyName varchar(50) not null,
     Difficulty varchar(50) not null,
     Health int not null,
-    LevelID varchar(50) not null references GameWiki.Level(LevelID),
+    LevelID int not null,
+    constraint foreign key (LevelID) references gamewiki.level(LevelID),
     primary key (EnemyName, Difficulty, Health)
 );
 
@@ -66,10 +72,14 @@ CREATE TABLE IF NOT EXISTS GameWiki.Item (
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.LevelItem (
-	ItemID int not null references GameWiki.Item(ItemID),
-    LevelID int not null references GameWiki.Level(LevelID),
-    EnemyID int references GameWiki.Enemy(EnemyID),
-    NPCID int references GameWiki.NPC(NPCID),
+	ItemID int not null,
+    LevelID int not null,
+    EnemyID int,
+    NPCID int,
+    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    constraint foreign key (LevelID) references gamewiki.level(LevelID),
+    constraint foreign key (EnemyID) references gamewiki.enemy(EnemyID),
+    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
     primary key (ItemID, LevelID)
 );
 
@@ -102,10 +112,12 @@ CREATE TABLE IF NOT EXISTS GameWiki.JobName (
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Job (
-	JobID int not null references GameWiki.JobName(JobID),
-    CharacterID int not null references GameWiki.Character(CharacterID),
+	JobID int not null,
+    CharacterID int not null,
     Difficulty varchar(50),
     RewardXP int,
+    constraint foreign key (JobID) references gamewiki.jobname(JobID),
+    constraint foreign key (CharacterID) references gamewiki.character(CharacterID),
     primary key (JobID, CharacterID)
 );
 
@@ -114,13 +126,17 @@ CREATE TABLE IF NOT EXISTS GameWiki.Quest (
     QuestType varchar(50) not null,
     QuestName varchar(50) not null,
     Difficulty varchar(50),
-    RewardXP int
+    RewardXP int,
+    constraint unique (QuestType, QuestName)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.NPCQuest (
-	QuestType varchar(50) not null references GameWiki.Quest(QuestType),
-    QuestName varchar(50) not null references GameWiki.Quest(QuestName),
-    NPCID int not null references GameWiki.NPC(NPCID),
+	QuestType varchar(50) not null,
+    QuestName varchar(50) not null,
+    NPCID int not null,
+    constraint foreign key (QuestType, QuestName)
+    references gamewiki.quest(QuestType, QuestName),
+    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
     primary key (QuestType, QuestName)
 );
 
