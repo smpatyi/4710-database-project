@@ -1,103 +1,81 @@
 CREATE DATABASE IF NOT EXISTS GameWiki;
 
 CREATE TABLE IF NOT EXISTS GameWiki.Game (
-	GameName varchar(50) NOT NULL PRIMARY KEY,
-	Platform varchar(50) NOT NULL CHECK (
-		Platform = 'Nintendo Switch' OR
-		Platform = 'PlayStation' OR
-		Platform = 'Xbox' OR
-		Platform = 'PC' ),
-	Genre varchar(50),
-	Price decimal(5,2) NOT NULL,
-	GameLength int,
-	Rating varchar(50) NOT NULL CHECK (
-		Rating = 'E' OR
-		Rating = 'E-10+' OR
-		Rating = 'T' OR
-		Rating = 'M' )
+    GameName varchar(50) NOT NULL PRIMARY KEY,
+    Platform varchar(50) NOT NULL CHECK (
+        Platform = 'Nintendo Switch' OR
+        Platform = 'PlayStation' OR
+        Platform = 'Xbox' OR
+        Platform = 'PC'),
+    Genre varchar(50),
+    Price decimal(5, 2) NOT NULL,
+    GameLength int,
+    Rating varchar(50) NOT NULL CHECK (
+        Rating = 'E' OR
+        Rating = 'E-10+' OR
+        Rating = 'T' OR
+        Rating = 'M')
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Location (
-	LocationID int CHECK(LocationID > 0 AND LocationID < 1000) NOT NULL PRIMARY KEY,
-	LocationName varchar(50) NOT NULL,
-	Theme varchar(500),
-	GameName varchar(50) NOT NULL,
-    constraint foreign key (GameName) references GameWiki.Game(GameName)
+    LocationID int CHECK(LocationID > 0 AND LocationID < 1000) NOT NULL PRIMARY KEY,
+    LocationName varchar(50) NOT NULL,
+    Theme varchar(500),
+    GameName varchar(50) NOT NULL,
+    CONSTRAINT foreign key (GameName) REFERENCES GameWiki.Game(GameName)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Level (
-	LevelID int check(LevelID > 0 AND LevelID < 1000) not null primary key,
+    LevelID int check(LevelID > 0 AND LevelID < 1000) not null primary key,
     LevelName varchar(50) not null,
     Boss varchar(50),
     RewardXP int,
     LocationID int not null,
-    constraint foreign key (LocationID) references gamewiki.location(LocationID)
+    CONSTRAINT foreign key (LocationID) REFERENCES GameWiki.Location(LocationID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.NPC (
-	NPCID int check(NPCID > 0 and NPCID < 1000) not null primary key,
+    NPCID int check(NPCID > 0 and NPCID < 1000) not null primary key,
     NPCName varchar(50) not null,
     Health int,
     XPLevel int,
     Mana int,
     ItemID int,
     LevelID int,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID),
-    constraint foreign key (LevelID) references gamewiki.level(LevelID)
+    CONSTRAINT foreign key (ItemID) REFERENCES GameWiki.Item(ItemID),
+    CONSTRAINT foreign key (LevelID) REFERENCES GameWiki.Level(LevelID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Enemy (
-	EnemyID int check(EnemyID > 0 and EnemyID < 1000) not null primary key,
+    EnemyID int check(EnemyID > 0 and EnemyID < 1000) not null primary key,
     EnemyName varchar(50) not null,
     Difficulty varchar(50) not null,
     Health int check(Health > 0) not null,
     RewardXP int,
     ItemID int not null,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID)
+    CONSTRAINT foreign key (ItemID) REFERENCES GameWiki.Item(ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.LevelEnemy (
-	EnemyName varchar(50) not null,
+    EnemyName varchar(50) not null,
     Difficulty varchar(50) not null,
     Health int not null,
     LevelID int not null,
-    constraint foreign key (LevelID) references gamewiki.level(LevelID),
+    CONSTRAINT foreign key (LevelID) REFERENCES GameWiki.Level(LevelID),
     primary key (EnemyName, Difficulty, Health)
 );
 
-CREATE TABLE IF NOT EXISTS GameWiki.Item (
-	ItemID int not null check(ItemID > 0 and ItemID < 1000) primary key,
-    ItemName varchar(50) not null,
-    ItemType binary not null
-);
 
 CREATE TABLE IF NOT EXISTS GameWiki.LevelItem (
-	ItemID int not null,
+    ItemID int not null,
     LevelID int not null,
     EnemyID int,
     NPCID int,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID),
-    constraint foreign key (LevelID) references gamewiki.level(LevelID),
-    constraint foreign key (EnemyID) references gamewiki.enemy(EnemyID),
-    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
-    primary key (ItemID, LevelID)
-);
+    CONSTRAINT foreign key (ItemID) REFERENCES GameWiki.Item(ItemID),
+    CONSTRAINT foreign key (LevelID) REFERENCES GameWiki.Level(LevelID)
+    );
 
-CREATE TABLE IF NOT EXISTS GameWiki.Weapon (
-	WeaponID int not null check(WeaponID > 0 and WeaponID < 1000) primary key,
-    WeaponType varchar(50) not null,
-    BasicAttack varchar(50) not null,
-    StrongAttack varchar(50),
-    SpecialAttack varchar(50)
-);
 
-CREATE TABLE IF NOT EXISTS GameWiki.Consumable (
-	ConsumableID int not null check(ConsumableID > 0 and ConsumableID < 1000) primary key,
-    ConsumableType varchar(50) not null,
-    Uses int,
-    Effect varchar(500),
-    Cost decimal(9, 2) not null
-);
 
 CREATE TABLE IF NOT EXISTS GameWiki.Character (
 	CharacterID int not null check(CharacterID > 0 and CharacterID < 1000) primary key,
@@ -117,7 +95,7 @@ CREATE TABLE IF NOT EXISTS GameWiki.Job (
     Difficulty varchar(50),
     RewardXP int,
     constraint foreign key (JobID) references gamewiki.jobname(JobID),
-    constraint foreign key (CharacterID) references gamewiki.character(CharacterID),
+    constraint foreign key (CharacterID) references gamewiki.Character(CharacterID),
     primary key (JobID, CharacterID)
 );
 
@@ -134,9 +112,8 @@ CREATE TABLE IF NOT EXISTS GameWiki.NPCQuest (
 	QuestType varchar(50) not null,
     QuestName varchar(50) not null,
     NPCID int not null,
-    constraint foreign key (QuestType, QuestName)
-    references gamewiki.quest(QuestType, QuestName),
-    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
+    Constraint foreign key (QuestType, QuestName) references gamewiki.Quest(QuestType, QuestName),
+    Constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
     primary key (QuestType, QuestName)
 );
 
@@ -145,3 +122,38 @@ CREATE TABLE IF NOT EXISTS GameWiki.Achievement (
     AchievementName varchar(50),
     Requirement varchar(500)
 );
+CREATE TABLE IF NOT EXISTS GameWiki.Weapon (
+    WeaponID BINARY(16) NOT NULL PRIMARY KEY,
+    WeaponType VARCHAR(50) NOT NULL,
+    BasicAttack VARCHAR(50) NOT NULL,
+    StrongAttack VARCHAR(50),
+    SpecialAttack VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS GameWiki.Consumable (
+    ConsumableID BINARY(16) NOT NULL PRIMARY KEY,
+    ConsumableType VARCHAR(50) NOT NULL,
+    Uses INT,
+    Effect VARCHAR(500),
+    Cost DECIMAL(9, 2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS GameWiki.Item (
+    ItemID INT NOT NULL CHECK (ItemID > 0 AND ItemID < 1000) PRIMARY KEY,
+    ItemName VARCHAR(50) NOT NULL,
+    ItemType VARCHAR(20) NOT NULL,
+    WeaponID BINARY(16),
+    ConsumableID BINARY(16),
+    CONSTRAINT foreign key (WeaponID) REFERENCES GameWiki.Weapon(WeaponID),
+    CONSTRAINT foreign key (ConsumableID) REFERENCES GameWiki.Consumable(ConsumableID)
+);
+ALTER TABLE GameWiki.Item
+ADD COLUMN isConsumable TINYINT(1) NOT NULL,
+ADD COLUMN isWeapon TINYINT(1) NOT NULL;
+
+ALTER TABLE GameWiki.Weapon
+ADD COLUMN isWeapon TINYINT(1) NOT NULL;
+
+ALTER TABLE GameWiki.Consumable
+ADD COLUMN isConsumable TINYINT(1) NOT NULL;
+
