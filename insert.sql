@@ -1,7 +1,8 @@
 INSERT IGNORE INTO gamewiki.game
 VALUES
 ("Elden Ring", "PC", "Action RPG", 59.99, 57, "M"),
-("Stardew Valley", "PC", "Indie", 14.99, 53, "E-10+");
+("Stardew Valley", "PC", "Indie", 14.99, 53, "E-10+"),
+("Final Fantasy 7 Remake", "PC", "Action RPG", 59.99, 37, "T");
 
 INSERT IGNORE INTO gamewiki.location
 VALUES
@@ -207,3 +208,27 @@ VALUES
 (007, "Best Friends", "Reach a 10-heart friend level with someone", "Stardew Valley"),
 (008, "Moving Up", "Upgrade your house", "Stardew Valley"),
 (009, "The Bottom", "Reach the lowest level of the mines", "Stardew Valley");
+
+INSERT IGNORE INTO gamewiki.guides
+VALUES
+(
+	001,
+	'Mythril Saber',
+	'How to Get the Mythril Saber: Purchase from the weapons shop in Wall Market as soon as Chapter 14 - In Search of Hope',
+	null,
+    'Final Fantasy 7 Remake'
+),
+(
+	002,
+	'Bloodhound',
+	'Military canines trained by Shinras Public Security Division. Genetic modifications have bestowed these animals with tentacles that can drain energy from their victim. Drops a Antitodte once their health of 50 gets depleted',
+	null,
+    'Final Fantasy 7 Remake'
+),
+(
+	003,
+	'On the Prowl Walkthrough',
+	'The fight against the wrath hound has 2 parts. The first time you encounter it you just need to get its health down to 2/3rds. At this point it will flee. Then continue ahead (towards the next map marker) and fight it for real, this time until it’s dead.',
+	null,
+    'Final Fantasy 7 Remake'
+);

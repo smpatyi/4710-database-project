@@ -153,3 +153,12 @@ CREATE TABLE IF NOT EXISTS GameWiki.Achievement (
     GameName varchar(50) not null,
     constraint foreign key (GameName) references gamewiki.game(GameName)
 );
+
+CREATE TABLE IF NOT EXISTS GameWiki.Guides (
+	GuideID int not null check(GuideID > 0 AND GuideID < 1000) primary key,
+    title varchar(50) not null,
+    content varchar(500) not null,
+    author varchar(50),
+    GameName varchar(50) not null,
+    constraint foreign key (GameName) references gamewiki.game(GameName)
+);
