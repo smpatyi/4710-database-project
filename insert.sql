@@ -17,7 +17,7 @@ VALUES
  
 INSERT IGNORE INTO gamewiki.level
 VALUES
-(001, "Church of Elleh", null, null, 001),
+(001, "Church of Elleh", "Tree Sentinel", 3200, 001),
 (002, "Highroad Cave", "Guardian Golem", 1700, 001),
 (003, "Caelid Catacombs", "Cemetery Shade", 2200, 002),
 (004, "Redmane Castle", "Starscourge Radahn", 70000, 002),
@@ -53,15 +53,36 @@ VALUES
 (012, "Spear", "Weapon", "Elden Ring"),
 (013, "Kale's Bell Bearing", "Consumable", "Elden Ring"),
 (014, "Royal Greatsword", "Weapon", "Elden Ring"),
+(022, "Smoldering Butterfly", "Consumable", "Elden Ring"),
+(023, "Throwing Dagger", "Consumable", "Elden Ring"),
+(024, "Cracked Pot", "Consumable", "Elden Ring"),
 
 (015, "Salad", "Consumable", "Stardew Valley"),
 (016, "Hot Pepper", "Consumable", "Stardew Valley"),
-(017, "Infinity Blade", "Weapon", "Stardew Valley"),
+(017, "Rusty Sword", "Weapon", "Stardew Valley"),
 (018, "Sap", "Consumable", "Stardew Valley"),
 (019, "Bat Wings", "Consumable", "Stardew Valley"),
 (020, "Void Essence", "Consumable", "Stardew Valley"),
-(021, "Coal", "Consumable", "Stardew Valley");
+(021, "Coal", "Consumable", "Stardew Valley"),
+(025, "Steel Smallsword", "Weapon", "Stardew Valley"),
+(026, "Slingshot", "Weapon", "Stardew Valley"),
+(027, "Crystal Dagger", "Weapon", "Stardew Valley"),
+(028, "Master Slingshot", "Weapon", "Stardew Valley"),
+(029, "Obsidian Edge", "Weapon", "Stardew Valley");
 
+INSERT IGNORE INTO gamewiki.levelItem
+VALUES
+(001, 002), (001, 003), (001, 011), (001, 013),
+(002, 011), (002, 012), (002, 010),
+(004, 014), (004, 012),
+(005, 004), (005, 009),
+(007, 001), (007, 002), (007, 003),
+
+(009, 015),
+(010, 021),
+(015, 021), (015, 017), (015, 025), (015, 018), (015, 021),
+(016, 019), (016, 018), (016, 026), (016, 027),
+(017, 018), (017, 020), (017, 028), (017, 029), (017, 021);
 
 INSERT IGNORE INTO gamewiki.consumable
 VALUES
@@ -72,6 +93,7 @@ VALUES
 (005, "Potion", 1, "Boosts physical damage negation", 600),
 (011, "Crafting Material", 1, "Used to create a wide variety of items", 250),
 (013, "Key Item", 1, "Unlocks new items offered by Twin Maiden Husks", null),
+(022, "Crafting Item", 1, "Used to create a wide variety of items", null),
 
 (015, "Food Item", 1, "Salad is a cooked dish. Restores health and energy", 220),
 (016, "Food Item", 1, "The Hot Pepper is a fruit crop. Restores health and energy.", null),
@@ -90,31 +112,36 @@ VALUES
 (012, "Spear", "Pierce", null, "Impaling Thrust"),
 (014, "Sword", "Standard", null, "Wolf's Assault"),
 
-(017, "Sword", "Standard", null, null);
+(017, "Sword", "Standard", null, null),
+(025, "Sword", "Standard", null, null),
+(026, "Sword", "Standard", null, null),
+(027, "Sword", "Standard", null, null),
+(028, "Sword", "Standard", null, null),
+(029, "Sword", "Standard", null, null);
 
 INSERT IGNORE INTO  gamewiki.enemy
 VALUES
-(001, "Boar", "Easy", 82, 16, 011),
-(002, "Exile Soldier", "Easy", 735, 938, 012),
-(003, "Cleanrot Knight", "Hard", 1980, 3300, 007),
-(004, "Fire Monk", "Medium", 765, 1076, 009),
+(001, "Boar", "Easy", 82, 16, null, 001),
+(002, "Exile Soldier", "Easy", 735, 938, 012, 002),
+(003, "Cleanrot Knight", "Hard", 1980, 3300, 007, 003),
+(004, "Fire Monk", "Medium", 765, 1076, 009, 005),
 
-(005, "Slime", "Easy", 24, 3, 018),
-(006, "Lava Bat", "Medium", 80, 7, 019),
-(007, "Shadow Shaman", "Hard", 80, 15, 020),
-(008, "Dust Sprite", "Easy", 40, 2, 021);
+(005, "Slime", "Easy", 24, 3, null, 015),
+(006, "Lava Bat", "Medium", 80, 7, null, 017),
+(007, "Shadow Shaman", "Hard", 80, 15, null, 017),
+(008, "Dust Sprite", "Easy", 40, 2, null, 016);
 
-INSERT IGNORE INTO gamewiki.levelenemy
+INSERT IGNORE INTO gamewiki.enemyitem
 VALUES
-("Boar", "Easy", 82, 001),
-("Exile Soldier", "Easy", 735, 002),
-("Cleanrot Knight", "Hard", 1980, 004),
-("Fire Monk", "Medium", 765, 005),
+(001, 011),
+(002, 012),
+(003, 007),
+(004, 009), (004, 022),
 
-("Shadow Shaman", "Hard", 80, 017),
-("Lava Bat", "Medium", 80, 017),
-("Slime", "Easy", 24, 015),
-("Dust Sprite", "Easy", 40, 016);
+(005, 018),
+(006, 019),
+(007, 020),
+(008, 021);
 
 INSERT IGNORE INTO gamewiki.npc
 VALUES
@@ -130,6 +157,11 @@ VALUES
 (009, "Elliott", null, null, null, null, 013),
 (010, "Sebastian", null, null, null, null, 018),
 (011, "Willy", null, null, null, null, 014);
+
+INSERT IGNORE INTO gamewiki.npcitem
+VALUES
+(001, 013), (001, 023), (001, 024),
+(002, 014);
 
 INSERT IGNORE INTO gamewiki.quest
 VALUES
@@ -152,16 +184,6 @@ VALUES
 ("Special Order", "Pierre's Prime Produce", 005),
 ("Special Order", "Juicy Bugs Wanted!", 011),
 ("Special Order", "Tropical Fish", 011);
-
-INSERT IGNORE INTO gamewiki.levelitem
-VALUES
-(002, 007, null, 003), 
-(013, 001, null, 001),
-(014, 004, null, 002),
-(009, 006, 004, null),
-(011, 001, 001, null),
-(012, 002, 002, null),
-(007, 003, 003, null);
 
 INSERT IGNORE INTO gamewiki.character
 VALUES

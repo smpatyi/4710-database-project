@@ -42,16 +42,32 @@ CREATE TABLE IF NOT EXISTS GameWiki.Item (
     constraint foreign key (GameName) references gamewiki.game(GameName)
 );
 
+CREATE TABLE IF NOT EXISTS GameWiki.LevelItem (
+	LevelID int not null,
+    ItemID int not null,
+    constraint foreign key (LevelID) references gamewiki.Level(LevelID),
+    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    primary key (LevelID, ItemID)
+);
+
 CREATE TABLE IF NOT EXISTS GameWiki.NPC (
 	NPCID int check(NPCID > 0 and NPCID < 1000) not null primary key,
     NPCName varchar(50) not null,
     Health int,
     XPLevel int,
     Mana int,
-    ItemID int,
-    LevelID int,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    heldItem int,
+    LevelID int not null,
+    constraint foreign key (HeldItem) references gamewiki.item(ItemID),
     constraint foreign key (LevelID) references gamewiki.level(LevelID)
+);
+
+CREATE TABLE IF NOT EXISTS GameWiki.NPCItem (
+	NPCID int not null,
+    ItemID int not null,
+    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
+    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    primary key (NPCID, ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Enemy (
@@ -60,29 +76,18 @@ CREATE TABLE IF NOT EXISTS GameWiki.Enemy (
     Difficulty varchar(50) not null,
     Health int check(Health > 0) not null,
     RewardXP int,
+    heldItem int,
+	levelID int not null,
+    constraint foreign key (heldItem) references gamewiki.item(ItemID),
+    constraint foreign key (levelID) references gamewiki.Level(LevelID)
+);
+
+CREATE TABLE IF NOT EXISTS GameWiki.EnemyItem (
+	EnemyID int not null,
     ItemID int not null,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID)
-);
-
-CREATE TABLE IF NOT EXISTS GameWiki.LevelEnemy (
-	EnemyName varchar(50) not null,
-    Difficulty varchar(50) not null,
-    Health int not null,
-    LevelID int not null,
-    constraint foreign key (LevelID) references gamewiki.level(LevelID),
-    primary key (EnemyName, Difficulty, Health)
-);
-
-CREATE TABLE IF NOT EXISTS GameWiki.LevelItem (
-	ItemID int not null,
-    LevelID int not null,
-    EnemyID int,
-    NPCID int,
-    constraint foreign key (ItemID) references gamewiki.item(ItemID),
-    constraint foreign key (LevelID) references gamewiki.level(LevelID),
     constraint foreign key (EnemyID) references gamewiki.enemy(EnemyID),
-    constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
-    primary key (ItemID, LevelID)
+    constraint foreign key (ItemID) references gamewiki.item(ItemID),
+    primary key (EnemyID, ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Weapon (
