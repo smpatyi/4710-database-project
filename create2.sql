@@ -193,3 +193,19 @@ AND EXISTS (
     FROM Guides g
     WHERE MATCH (g.title, g.content, g.gamename) AGAINST ('Mythril Saber' IN NATURAL LANGUAGE MODE)
 );
+INSERT INTO
+   Guides (title, content, GameName)
+VALUES
+    (
+        'In Search Of Hope',
+        'As you leave Aeriths House, make sure to snag the Pedometer Materia youll see on the path ahead of you. Equip it as you walk around and itll eventually transform into AP Up Materia, which allows you to level up linked materia more quickly.
+When you enter the town in Sector 5, youll have access to a bunch of new odd jobs. Drop by the Moogle Emporium in the Kids Hideout to buy the Steel Pincers weapon for Barret',
+        'Final Fantasy 7 Remake'
+         );
+SELECT
+    *
+FROM
+    Guides 
+WHERE
+    MATCH (title, content,GameName) AGAINST ('Chapter 14' WITH QUERY EXPANSION);        
+-- Query to find similar guides 
