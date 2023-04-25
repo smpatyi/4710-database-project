@@ -13,7 +13,9 @@ VALUES
 (004, "Pelican Town", "Pelican Town is where the player moves to at the start of the game, located in Stardew Valley. Pelican Town is where most of the villagers live, work, and socialize.", "Stardew Valley"),
 (005, "Cindersap Forest", "Cindersap Forest is a large exterior region found in the southwest part of Stardew Valley. It has exits to the north into the Farm, to the east into Pelican Town, to the south into The Sewers, and to the northwest into the Secret Woods.", "Stardew Valley"),
 (006, "The Beach", "The Beach is located to the south of Pelican Town. It is a valuable area for fishing as it is one of the few sources for saltwater fish.", "Stardew Valley"),
-(007, "The Mines", "The Mines are located in the north area of The Mountains (northeast of the Carpenter's Shop and to the west of the Adventurer's Guild).", "Stardew Valley");
+(007, "The Mines", "The Mines are located in the north area of The Mountains (northeast of the Carpenter's Shop and to the west of the Adventurer's Guild).", "Stardew Valley"),
+
+(008, "Chapter 2", "Final Fantasy Chapter 2", "Final Fantasy 7 Remake");
  
 INSERT IGNORE INTO gamewiki.level
 VALUES
@@ -35,7 +37,9 @@ VALUES
 (015, "Earth Floor", "Stone Golem", null, 007),
 (016, "Frozen Earth Floor", "Skeleton", null, 007),
 (017, "Lava Floor", "Squid Kid", null, 007),
-(018, "24 Mountain Road", null, null, 004);
+(018, "24 Mountain Road", null, null, 004),
+
+(019, "Chapter 2", null, null, 008);
 
 INSERT IGNORE INTO gamewiki.item
 VALUES
@@ -133,7 +137,10 @@ VALUES
 (005, "Slime", "Easy", 24, 3, null, 015),
 (006, "Lava Bat", "Medium", 80, 7, null, 017),
 (007, "Shadow Shaman", "Hard", 80, 15, null, 017),
-(008, "Dust Sprite", "Easy", 40, 2, null, 016);
+(008, "Dust Sprite", "Easy", 40, 2, null, 016),
+
+(009, "Rat", "Easy", 57, 14, null, 003),
+(010, "Rat", "Hard", 124, 40, null, 019);
 
 INSERT IGNORE INTO gamewiki.enemyitem
 VALUES
