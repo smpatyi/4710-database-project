@@ -68,7 +68,9 @@ VALUES
 (026, "Slingshot", "Weapon", "Stardew Valley"),
 (027, "Crystal Dagger", "Weapon", "Stardew Valley"),
 (028, "Master Slingshot", "Weapon", "Stardew Valley"),
-(029, "Obsidian Edge", "Weapon", "Stardew Valley");
+(029, "Obsidian Edge", "Weapon", "Stardew Valley"),
+
+(030, "Mythril Saber", "Weapon", "Final Fantasy 7 Remake");
 
 INSERT IGNORE INTO gamewiki.levelItem
 VALUES
@@ -117,7 +119,9 @@ VALUES
 (026, "Sword", "Standard", null, null),
 (027, "Sword", "Standard", null, null),
 (028, "Sword", "Standard", null, null),
-(029, "Sword", "Standard", null, null);
+(029, "Sword", "Standard", null, null),
+
+(030, "Broadsword", "Standard", null, null);
 
 INSERT IGNORE INTO  gamewiki.enemy
 VALUES
@@ -176,14 +180,14 @@ VALUES
 
 INSERT IGNORE INTO gamewiki.npcquest
 VALUES
-("Story", "Marnie's Request", 008),
-("Story", "Smelting", 007),
-("Story", "To The Beach", 011),
-("Special Order", "Cave Patrol", 007),
-("Special Order", "Gus' Famous Omelet", 006),
-("Special Order", "Pierre's Prime Produce", 005),
-("Special Order", "Juicy Bugs Wanted!", 011),
-("Special Order", "Tropical Fish", 011);
+(001, 008),
+(002, 007),
+(003, 011),
+(004, 007),
+(005, 006),
+(006, 005),
+(007, 011),
+(008, 011);
 
 INSERT IGNORE INTO gamewiki.character
 VALUES
@@ -237,20 +241,23 @@ VALUES
 	001,
 	'Mythril Saber',
 	'How to Get the Mythril Saber: Purchase from the weapons shop in Wall Market as soon as Chapter 14 - In Search of Hope',
-	null,
     'Final Fantasy 7 Remake'
 ),
 (
 	002,
 	'Bloodhound',
 	'Military canines trained by Shinras Public Security Division. Genetic modifications have bestowed these animals with tentacles that can drain energy from their victim. Drops a Antitodte once their health of 50 gets depleted',
-	null,
     'Final Fantasy 7 Remake'
 ),
 (
 	003,
 	'On the Prowl Walkthrough',
 	'The fight against the wrath hound has 2 parts. The first time you encounter it you just need to get its health down to 2/3rds. At this point it will flee. Then continue ahead (towards the next map marker) and fight it for real, this time until it’s dead.',
-	null,
+    'Final Fantasy 7 Remake'
+),
+(
+	004,
+    'temp guide',
+    'You can get the mythril saber by purchasing it from the Wall Market weapon shop for 3,000 gil during chapter 14.',
     'Final Fantasy 7 Remake'
 );

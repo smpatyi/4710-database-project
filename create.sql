@@ -142,17 +142,15 @@ CREATE TABLE IF NOT EXISTS GameWiki.Quest (
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.NPCQuest (
-	QuestType varchar(50) not null,
-    QuestName varchar(50) not null,
+	QuestID int not null,
     NPCID int not null,
-    constraint foreign key (QuestType, QuestName)
-    references gamewiki.quest(QuestType, QuestName),
+    constraint foreign key (QuestID) references gamewiki.quest(QuestID),
     constraint foreign key (NPCID) references gamewiki.NPC(NPCID),
-    primary key (QuestType, QuestName)
+    primary key (QuestID)
 );
 
 CREATE TABLE IF NOT EXISTS GameWiki.Achievement (
-	AchievementID int not null check(AchievementID > 0 AND AchievementID < 1000) primary key,
+	AchievementID int not null primary key auto_increment,
     AchievementName varchar(50),
     Requirement varchar(500),
     GameName varchar(50) not null,
@@ -161,9 +159,9 @@ CREATE TABLE IF NOT EXISTS GameWiki.Achievement (
 
 CREATE TABLE IF NOT EXISTS GameWiki.Guides (
 	GuideID int not null check(GuideID > 0 AND GuideID < 1000) primary key,
-    title varchar(50) not null,
-    content varchar(500) not null,
-    author varchar(50),
+    title TEXT not null,
+    content TEXT not null,
     GameName varchar(50) not null,
-    constraint foreign key (GameName) references gamewiki.game(GameName)
+    constraint foreign key (GameName) references gamewiki.game(GameName),
+    FULLTEXT ata_post_index (title, content)
 );
